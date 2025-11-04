@@ -169,8 +169,13 @@ public class OpenSSLUtils {
                 let val = errVal!.withMemoryRebound(to: CChar.self, capacity: 1000) { (ptr) in
                     return String(cString: ptr)
                 }
-                
-                Logger.openSSL.error("error \(cert_error) at \(X509_STORE_CTX_get_error_depth(ctx)) depth lookup:\(val)" )
+
+                if cert_error == X509_V_ERR_EC_KEY_EXPLICIT_PARAMS {
+                    // Ignoring this
+                    ok = 1
+                } else {
+                    Logger.openSSL.error("error \(cert_error) at \(X509_STORE_CTX_get_error_depth(ctx)) depth lookup:\(val)" )
+                }
             }
             
             return ok;
