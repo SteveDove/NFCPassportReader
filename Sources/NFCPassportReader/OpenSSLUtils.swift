@@ -172,7 +172,7 @@ public class OpenSSLUtils {
 
                 if cert_error == X509_V_ERR_EC_KEY_EXPLICIT_PARAMS {
                     // Ignoring this
-                    ret = 1
+                    //ret = 1
                 } else {
                     Logger.openSSL.error("error \(cert_error) at \(X509_STORE_CTX_get_error_depth(ctx)) depth lookup:\(val)" )
                 }
